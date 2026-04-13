@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar/Navbar";
 import MailboxDetails from "./components/MailboxDetails/MailboxDetails";
 import MailboxForm from "./components/MailboxForm/MailboxForm";
 import MailboxList from "./components/MailboxList/MailboxList";
+import LetterForm from "./components/LetterForm/LetterForm";
 import Error from "./Pages/Error/index";
 
 const App = () => {
@@ -19,6 +20,17 @@ const App = () => {
     setMailboxes([...mailboxes, newMailbox]);
   }
 
+  const [letters, setLetters] = useState([]);
+
+  const addLetter = (formData)=> {
+    const newLetter = {
+      mailboxId: formData.mailboxId,
+      _id: letters.length + 1,
+      recipient: formData.recipient,
+      message: formData.message,
+    };
+    setLetters([...letters, newLetter]);
+  }
   return (
     <>
       <Navbar />
@@ -37,10 +49,13 @@ const App = () => {
         />
         <Route
           path="/mailboxes/:mailboxId"
-          element={<MailboxDetails mailboxes={mailboxes} />}
+          element={<MailboxDetails mailboxes={mailboxes} letters={letters} />}
         />
-        <Route path="/new-mailbox" element={<MailboxForm addBox={addBox}/>} />
-        <Route path="*" element={<Error text="Mailbox Not Found!"/>} />
+        <Route path="/new-mailbox" element={<MailboxForm addBox={addBox} />} />
+
+        <Route path="/new-letter" element={<LetterForm mailboxes={mailboxes} addLetter={addLetter} />} />
+
+        <Route path="*" element={<Error text="Mailbox Not Found!" />} />
       </Routes>
     </>
   );
