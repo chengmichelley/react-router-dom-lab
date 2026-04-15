@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Routes, Route} from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import MailboxDetails from "./components/MailboxDetails/MailboxDetails";
@@ -13,7 +12,7 @@ const App = () => {
 
   const addBox = (formData) => {
     const newMailbox = {
-      _id: mailboxes.length + 1,
+      _id: crypto.randomUUID(),
       owner: formData.boxOwner,
       size: formData.boxSize,
     };
@@ -25,7 +24,7 @@ const App = () => {
   const addLetter = (formData)=> {
     const newLetter = {
       mailboxId: formData.mailboxId,
-      _id: letters.length + 1,
+      _id: crypto.randomUUID(),
       recipient: formData.recipient,
       message: formData.message,
     };
